@@ -1,11 +1,22 @@
 'use strict';
 class node {
-    constructor(name, group, atr) {
-    this.name = name;
-    this.group = group;
-    this.atr = atr;
+    constructor(id, name, x, y, size, colour, group, attr) {
+		this.id = id;
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.size = size;
+		this.colour = colour;
+		this.group = group;
+		this.attr = attr;
+	}
+    
+    getAttr() {
+    return this.attr;
+  }
 }
-}
+
+
 
 function includes(container, value) {
 	var returnValue = false;
@@ -23,17 +34,18 @@ function digraph () {
         group: []
     };
 
-    function addNode (name, group, atr) {
-        var n = ((typeof name === 'undefined') ? {} : new node(name, group, atr));
+     
+    function addNode (id, name, x, y, size, colour, group, attr) {
+        var n = ((typeof name === 'undefined') ? {} : new node(id, name, x, y, size, colour, group, attr));
         graph.nodes.push(n);
         if (!includes(graph.group, group)) {graph.group.push(group);}
         return n;
     }
 
     //u,v are the names of nodes, o is the lable for u -> v
-    function addEdge (u, v, o) {
+    function addEdge (edgeid, u, v, o) {
         if (indexOfNode(u) != -1 && indexOfNode(v) != -1) {
-        var e = [u, v, ((typeof o === 'undefined') ? {} : o)];
+        var e = [edgeid, u, v, ((typeof o === 'undefined') ? {} : o)];
         graph.edges.push(e);
         return e;
         }
@@ -48,14 +60,14 @@ function digraph () {
 
     function getOutEdges (n) {
         return graph.edges.reduce(function (res, e) {
-            if (e[0] === n) { res.push(e); }
+            if (e[1] === n) { res.push(e); }
             return res;
         }, []);
     }
     
     function getInEdges (n) {
         return graph.edges.reduce(function (res, e) {
-            if (e[1] === n) { res.push(e); }
+            if (e[2] === n) { res.push(e); }
             return res;
         }, []);
     }
@@ -72,10 +84,15 @@ function digraph () {
             }
         }) ? index : -1;
     }
+    
+    function getAttribute(node) {
+        var index = indexOfNode(node);
+        return graph.nodes[index].getAttr();
+    }
 
     function exportObj () {
         var edges = graph.edges.map(function (e) {
-            return [indexOfNode(e[0]), indexOfNode(e[1]), e[2]];
+            return [e[0], indexOfNode(e[1]), indexOfNode(e[2]), e[3]];
         });
         return {
             nodes: graph.nodes,
@@ -97,7 +114,7 @@ function digraph () {
             res += '	' + indexOfNode(n.name) + ' [';
             res += keys.map(function (key) {
                 
-                return 'label' + ' = ' + n[key];
+                return key + ' = ' + n[key];
                 
             }).join(', ');
             res += ']\n';
@@ -107,10 +124,10 @@ function digraph () {
         
         graph.edges.forEach(function (e) {
             res += '	'
-                + ((typeof e[0].id === 'string') ? e[0].id : ('' + indexOfNode(e[0])))
+                + ((typeof e[1].id === 'string') ? e[1].id : ('' + indexOfNode(e[1])))
                 + ' -> '
-                + ((typeof e[1].id === 'string') ? e[1].id : ('' + indexOfNode(e[1])));
-            res += ' '+((typeof e[2] === 'string') ? '[label = '+e[2]+']' : '')
+                + ((typeof e[2].id === 'string') ? e[2].id : ('' + indexOfNode(e[2])));
+            res += ' '+((typeof e[3] === 'string') ? '[label = '+e[3]+']' : '')
                 + '\n';
         });
         res += '}\n';
@@ -136,7 +153,8 @@ function digraph () {
             obj: exportObj,
             dot: exportDot
         },
-        indexof : indexOfNode
+        indexof : indexOfNode,
+        getAttr : getAttribute
     };
 }
 
