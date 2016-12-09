@@ -96,7 +96,8 @@ function digraph () {
         });
         return {
             nodes: graph.nodes,
-            edges: edges
+            edges: edges,
+            group: graph.group
         };
     }
 
