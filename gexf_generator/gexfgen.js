@@ -1,4 +1,5 @@
 var fs = require('fs');
+var digraph = require('../GraphDataStructure/digraph');
 
 // Metadata variables
 var creator = 'Michael Zhang';
@@ -26,7 +27,7 @@ function graphGenerator(g) {
 	data += '\t\t<nodes>\n';
 	var n;
 	
-	for (var i = 0; i < graph.nodes.length; i++) {
+	for (var i = 0; i < g.nodes.length; i++) {
 		n = g.nodes[i];
 		data += '\t\t\t<node id="'+n.id+'" label="'+n.label+'">\n';
         data += '\t\t\t\t<viz:size value="'+n.size+'"></viz:size>\n';
@@ -41,8 +42,8 @@ function graphGenerator(g) {
 	data += '\t\t<edges>\n';
 	var e;
 	
-	for (var i = 0; i < graph.edges.length; i++) {
-		e = graph.edges[i];
+	for (var i = 0; i < g.edges.length; i++) {
+		e = g.edges[i];
 		data += '\t\t\t<edge id="'+e[0]+'" source="'+e[1]+'" target="'+e[2]+'" label="'+e[3]+'"></edge>\n';
 	}
 	
@@ -61,4 +62,4 @@ function graphGenerator(g) {
 	});
 };
 
-exports.graphGenerator = graphGenerator;
+exports.generate = graphGenerator;
