@@ -12,8 +12,12 @@ class node {
 	}
     
     getAttr() {
-    return this.attr;
-  }
+		return this.attr;
+	}
+	
+	getColour() {
+		return this.colour;
+	}
 }
 
 
@@ -89,6 +93,11 @@ function digraph () {
         var index = indexOfNode(node);
         return graph.nodes[index].getAttr();
     }
+	
+	function getColour(node) {
+        var index = indexOfNode(node);
+        return graph.nodes[index].getColour();
+    }
 
     function exportObj () {
         var edges = graph.edges.map(function (e) {
@@ -155,7 +164,8 @@ function digraph () {
             dot: exportDot
         },
         indexof : indexOfNode,
-        getAttr : getAttribute
+        getAttr : getAttribute,
+		getColour : getColour
     };
 }
 
