@@ -2,26 +2,47 @@
 <gexf xmlns="http://www.gexf.net/1.3" version="1.3" xmlns:viz="http://www.gexf.net/1.3/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.3 http://www.gexf.net/1.3/gexf.xsd">
 	<meta lastmodifieddate="yyyy-mm-dd">
 		<creator>Michael Zhang</creator>
-		<description>File creation based on Gephi 0.9 gexf file</description>
+		<description>File creation based on Gephi 0.9 gexf file and SigmaJS example gexf file for filters</description>
 	</meta>
 	<graph defaultedgetype="directed" mode="static">
+		<attributes class="node" mode="static">
+			<attribute id="acategory" title="Category" type="string"></attribute>
+		</attributes>
 		<nodes>
-			<node id="1" label="undefined">
-				<viz:size value="1"></viz:size>
-				<viz:position x="50" y="50"></viz:position>
+			<node id="1" label="a">
+				<attvalues>
+					<attvalue for="acategory" value="valueA"></attvalue>
+				</attvalues>
+				<viz:size value="10"></viz:size>
+				<viz:position x="0" y="0"></viz:position>
+				<viz:color r="0" g="0" b="255"></viz:color>
 			</node>
-			<node id="2" label="undefined">
-				<viz:size value="1"></viz:size>
-				<viz:position x="50" y="50"></viz:position>
+			<node id="2" label="b">
+				<attvalues>
+					<attvalue for="acategory" value="valueB"></attvalue>
+				</attvalues>
+				<viz:size value="10"></viz:size>
+				<viz:position x="25" y="25"></viz:position>
+				<viz:color r="255" g="0" b="0"></viz:color>
 			</node>
-			<node id="3" label="undefined">
-				<viz:size value="1"></viz:size>
+			<node id="3" label="c">
+				<attvalues>
+					<attvalue for="acategory" value="valueC"></attvalue>
+				</attvalues>
+				<viz:size value="10"></viz:size>
 				<viz:position x="50" y="50"></viz:position>
+				<viz:color r="0" g="255" b="0"></viz:color>
 			</node>
 		</nodes>
 		<edges>
-			<edge id="100" source="0" target="1" label="asd"></edge>
-			<edge id="101" source="0" target="2" label="LABEL"></edge>
+			<edge id="100" source="1" target="2" label="asd">
+				<attvalues>
+				</attvalues>
+			</edge>
+			<edge id="101" source="1" target="3" label="LABEL">
+				<attvalues>
+				</attvalues>
+			</edge>
 		</edges>
 	</graph>
 </gexf>
