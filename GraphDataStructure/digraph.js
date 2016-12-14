@@ -46,7 +46,7 @@ function digraph () {
         return n;
     }
 
-    //u,v are the names of nodes, o is the lable for u -> v
+    //u,v are the names of nodes, o is the label for u -> v
     function addEdge (edgeid, u, v, o) {
         if (indexOfNode(u) != -1 && indexOfNode(v) != -1) {
         var e = [edgeid, u, v, ((typeof o === 'undefined') ? {} : o)];
@@ -57,6 +57,13 @@ function digraph () {
         console.log('illegal input, node not created');    
         }
     }
+	
+	//function is same as above except u,v are node ids instead of names
+	function addEdgebyId (edgeid, u, v, o) {
+        var e = [edgeid, graph.nodes[u-1].name, graph.nodes[v-1].name, ((typeof o === 'undefined') ? {} : o)];
+        graph.edges.push(e);
+        return e;
+	}
 
     function getEdges () { return graph.edges; }
 
@@ -101,7 +108,7 @@ function digraph () {
 
     function exportObj () {
         var edges = graph.edges.map(function (e) {
-            return [e[0], indexOfNode(e[1]), indexOfNode(e[2]), e[3]];
+            return [e[0], indexOfNode(e[1])+1, indexOfNode(e[2])+1, e[3]];
         });
         return {
             nodes: graph.nodes,
@@ -147,7 +154,8 @@ function digraph () {
     return {
         add: {
             node: addNode,
-            edge: addEdge
+            edge: addEdge,
+			edgebyId: addEdgebyId
         },
         get: {
             nodes: getNodes,
