@@ -1,3 +1,4 @@
+function xmlTraverser(){
 var fs = require('graceful-fs');
 var fileExists = require('file-exists');
 var readlineSync = require('readline-sync');
@@ -6,16 +7,17 @@ var os = require("os");
 var mkdirp = require('mkdirp');
 var path = require('path');
 
-//asking for the directory and the file name of the .xml file to parse
-//
-var dir = readlineSync.question('Enter the Path to the file directory: ');
-//var file = readlineSync.question('file: ');
+
 
 var allContent = [];
+var contentarr = [];
 
-if(fs.lstatSync(dir).isDirectory()){ //typed in directory exists
+function traverse(dir) {        
+    if(fs.lstatSync(dir).isDirectory()){ //typed in directory exists
     readFolder(dir);
-}
+        
+    }
+    }
 
 // readFolder(dir) reads all the xml files that currently exists inside the folder and creates 
 //an approprieate data structure to store all the xml object 
@@ -37,8 +39,9 @@ function readFolder(dir){
                readFolder(pathMerge); 
            }
        } 
-     });
+     });            
        checker(allContent); 
+       contentarr = allContent;
     });
 } 
 
@@ -70,13 +73,14 @@ function readOneFile(fileLocation){
      var nameSpaceTitle = 'cwa_ecm';
      var xmlDoc = fs.readFileSync(fileLocation, 'utf8');
      var doc = new DOMParser().parseFromString(xmlDoc, 'text/xml'); //doc stores xml metadata file content
+    // this "metadata" should be declared as a class outside of the function
      var metadata = {
               fileName: metadataFileName,
               xmlContent: doc
             };
 
      if(!(nsExists(allContent, nameSpaceTitle))){ //namespace doesn't exists
-        
+        //// this "nspace" should be declared as a class outside of the function
           var nspace = {
               name: nameSpaceTitle, 
               metadataArray: []
@@ -117,4 +121,10 @@ function checker(allContent){
       console.log(scrDataVal.length);
     
 }
+return {
+    traverse: traverse
+};
 
+}
+
+module.exports = xmlTraverser;
