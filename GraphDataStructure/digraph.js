@@ -54,15 +54,30 @@ function digraph () {
         return e;
         }
         else {
-        console.log('illegal input, node not created');    
+        console.log('illegal input, one or more nodes do not exist');    
         }
     }
 	
 	//function is same as above except u,v are node ids instead of names
 	function addEdgebyId (edgeid, u, v, o) {
-        var e = [edgeid, graph.nodes[u-1].name, graph.nodes[v-1].name, ((typeof o === 'undefined') ? {} : o)];
+		var uname;
+		var vname;
+		for (var i = 0; i < graph.nodes.length; i++) {
+			if (graph.nodes[i].id == u) {
+				uname = graph.nodes[i].name;
+			}
+			else if (graph.nodes[i].id == v) {
+				vname = graph.nodes[i].name;
+			}
+		}
+		if (uname != undefined && vname != undefined) {
+        var e = [edgeid, uname, vname, ((typeof o === 'undefined') ? {} : o)];
         graph.edges.push(e);
         return e;
+		}
+		else {
+			console.log('illegal input, one or more nodes do not exist');
+		}
 	}
 
     function getEdges () { return graph.edges; }
@@ -95,6 +110,16 @@ function digraph () {
             }
         }) ? index : -1;
     }
+	
+	function idOfNode (node) {
+		var id;
+        return graph.nodes.some(function (n, i) {
+            if (n.name === node) {
+                id = n.id;
+                return true;
+            }
+        }) ? id : -1;
+    }
     
     function getAttribute(node) {
         var index = indexOfNode(node);
@@ -108,7 +133,7 @@ function digraph () {
 
     function exportObj () {
         var edges = graph.edges.map(function (e) {
-            return [e[0], indexOfNode(e[1])+1, indexOfNode(e[2])+1, e[3]];
+            return [e[0], idOfNode(e[1]), idOfNode(e[2]), e[3]];
         });
         return {
             nodes: graph.nodes,
