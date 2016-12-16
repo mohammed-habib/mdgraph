@@ -26,7 +26,7 @@ function readAll(dir){
     //console.log(allContent.length);
     //checker(allContent);
     return allContent;
-  }, 1500);
+  }, 2000);
 }
 
 exports.readAll = readAll;
