@@ -1,12 +1,9 @@
 'use strict';
 class node {
-    constructor(id, name, x, y, size, colour, group, attr) {
+    constructor(id, name, size, group, attr) {
 		this.id = id;
 		this.name = name;
-		this.x = x;
-		this.y = y;
 		this.size = size;
-		this.colour = colour;
 		this.group = group;
 		this.attr = attr;
 	}
@@ -39,8 +36,8 @@ function digraph () {
     };
 
      
-    function addNode (id, name, x, y, size, colour, group, attr) {
-        var n = ((typeof name === 'undefined') ? {} : new node(id, name, x, y, size, colour, group, attr));
+    function addNode (id, name, size, group, attr) {
+        var n = ((typeof name === 'undefined') ? {} : new node(id, name, size, group, attr));
         graph.nodes.push(n);
         if (!includes(graph.group, group)) {graph.group.push(group);}
         return n;
