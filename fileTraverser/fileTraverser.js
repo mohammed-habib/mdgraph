@@ -1,4 +1,3 @@
-function xmlTraverser(){
 var fs = require('graceful-fs');
 var fileExists = require('file-exists');
 var readlineSync = require('readline-sync');
@@ -7,21 +6,30 @@ var os = require("os");
 var mkdirp = require('mkdirp');
 var path = require('path');
 
+//asking for the directory and the file name of the .xml file to parse
+//
+var dir = readlineSync.question('Enter the Path to the file directory: ');
+//var file = readlineSync.question('file: ');
+
+var allContent = new Array; //stores all the metadata files
 
 
-var allContent = [];
-var contentarr = [];
-
-function traverse(dir) {        
-    if(fs.lstatSync(dir).isDirectory()){ //typed in directory exists
-    readFolder(dir);
-        
-    }
-    }
+if(fs.lstatSync(dir).isDirectory()){ //typed in directory exists
+    readAll(dir);
+}
 
 // readFolder(dir) reads all the xml files that currently exists inside the folder and creates 
 //an approprieate data structure to store all the xml object 
+function readAll(dir){
+  readFolder(dir);
+  setTimeout(function(){
+    //console.log(allContent.length);
+    //checker(allContent);
+    return allContent;
+  }, 1500);
+}
 
+exports.readAll = readAll;
 
 function readFolder(dir){
  //readOneFile(dir+'/'+file);
@@ -39,63 +47,25 @@ function readFolder(dir){
                readFolder(pathMerge); 
            }
        } 
-     });            
-       checker(allContent); 
-       contentarr = allContent;
+     }); 
     });
 } 
 
 
-
-function nsExists(allContent, nameSpaceTitle){
-  var len = allContent.length;
-  for(var i = 0; i < len; i++){
-    if(allContent[i].name === nameSpaceTitle){
-      return true;
-    }
-  }
-  return false;
-}
-
-function getIndex(allContent, nameSpace){
-  var len = allContent.length;
-  for(var k = 0; k < len; k++){
-    if(allContent[k].name === nameSpace){
-      return k;
-    }
-  }
-}
-
-
 function readOneFile(fileLocation){
-  //var len = allContent.length;
-     var metadataFileName = path.basename(fileLocation, '.xml'); //name of the metaData file i.e. cmap_itemAction WITHOUT .xml
-     var nameSpaceTitle = 'cwa_ecm';
-     var xmlDoc = fs.readFileSync(fileLocation, 'utf8');
-     var doc = new DOMParser().parseFromString(xmlDoc, 'text/xml'); //doc stores xml metadata file content
-    // this "metadata" should be declared as a class outside of the function
-     var metadata = {
-              fileName: metadataFileName,
-              xmlContent: doc
-            };
 
-     if(!(nsExists(allContent, nameSpaceTitle))){ //namespace doesn't exists
-        //// this "nspace" should be declared as a class outside of the function
-          var nspace = {
-              name: nameSpaceTitle, 
-              metadataArray: []
-            };
+    var dirName = path.dirname(fileLocation);
+    var nameSpaceTitle = path.basename(dirName);
+    //console.log(nameSpaceTitle)
+    var metadataFileName = path.basename(fileLocation, '.xml'); //gives the name of the metadata file i.e. cmap_itemaction
+    var xmlDoc = fs.readFileSync(fileLocation, 'utf8');
+    var doc = new DOMParser().parseFromString(xmlDoc, 'text/xml'); 
 
-          nspace.metadataArray.push(metadata);
-          allContent.push(nspace);
-     }
-
-      else{ //namespace exists already in the allcontent array
-        //console.log(allContent.length);
-          var index = getIndex(allContent, nameSpaceTitle); 
-          allContent[index].metadataArray.push(metadata); 
-          //console.log(allcontent[index].)
-      }
+    allContent.push({
+        nameSpace: nameSpaceTitle, 
+        fileName: metadataFileName,
+        xmlContent: doc
+    });
 
 }
 
@@ -103,28 +73,22 @@ function readOneFile(fileLocation){
 function checker(allContent){
      console.log(allContent.length);  // number of namespaces
 
-     console.log(allContent[0].name); // name of the nameSpace
+     console.log(allContent[351].nameSpace); // name of the nameSpace
 
-     console.log(allContent[0].metadataArray.length); // metadata files of cwa_ecm
+     console.log(allContent[0].fileName); // metadata files of cwa_ecm
      
-     var data = allContent[0].metadataArray[23].xmlContent;
+     var data = allContent[0].xmlContent;
      var xmlData = '';
      xmlData += data;
      
-     //console.log(xmlData);
+     console.log(xmlData);
 
       var methods = data.getElementsByTagName('method'); 
       var scrDataVal = data.getElementsByTagName('script');
 
-      console.log(allContent[0].metadataArray[4].fileName); 
+      console.log(allContent[1].nameSpace); 
       console.log(methods.length);
       console.log(scrDataVal.length);
     
 }
-return {
-    traverse: traverse
-};
 
-}
-
-module.exports = xmlTraverser;
