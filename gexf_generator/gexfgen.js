@@ -1,6 +1,6 @@
 var fs = require('fs');
 var digraph = require('../GraphDataStructure/digraph');
-var metadata = require('./metadata');
+var config = require('config');
 
 /*
 ** A Graph is made up of nodes, edges and groups
@@ -9,13 +9,18 @@ var metadata = require('./metadata');
 ** Groups are identifiers for sets of nodes with the similar attributes or other categorical reasons
 */
 
+// Config metadata
+var date = config.get('metadata.date');
+var creator = config.get('metadata.creator');
+var description = config.get('metadata.description');
+
 function graphGenerator(g) {
 	// Variable to store file contents, initiate file headers
 	var data = '<?xml version="1.0" encoding="UTF-8"?>\n';
 	data += '<gexf xmlns="http://www.gexf.net/1.3" version="1.3" xmlns:viz="http://www.gexf.net/1.3/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.3 http://www.gexf.net/1.3/gexf.xsd">\n';
-	data += '\t<meta lastmodifieddate="'+metadata.date+'">\n';
-	data += '\t\t<creator>'+metadata.creator+'</creator>\n';
-	data += '\t\t<description>'+metadata.description+'</description>\n';
+	data += '\t<meta lastmodifieddate="'+date+'">\n';
+	data += '\t\t<creator>'+creator+'</creator>\n';
+	data += '\t\t<description>'+description+'</description>\n';
 	data += '\t</meta>\n';
 	data += '\t<graph defaultedgetype="directed" mode="static">\n';
 	
