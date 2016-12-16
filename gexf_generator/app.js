@@ -1,7 +1,9 @@
 var generator = require('./gexfgen.js');
+var colourizer = require('./colourizer.js');
 var digraph = require('../GraphDataStructure/digraph');
 var attribute = require('../GraphDataStructure/attribute');
 var colour = require('../GraphDataStructure/colour');
+var config = require('config');
 
 /* var lineReaderNodes = require('readline').createInterface({
   input: require('fs').createReadStream('nodes.csv')
@@ -41,14 +43,24 @@ lineReaderEdges.on('line', function (line) {
 	//console.log(arr);
 }); */
 
-graph.add.node(1,'a',0,0,10,new colour(0,0,255), 'GroupA',new attribute('acategory', 'valueA'));
-graph.add.node(2,'b',25,25,10,new colour(255,0,0), 'GroupB',new attribute('acategory', 'valueB'));
-graph.add.node(3,'c',50,50,10,new colour(0,255,0), 'GroupB',new attribute('acategory', 'valueC'));
+graph.add.node(1,'a',10, 'GroupA',new attribute('acategory', 'cmap_'));
+graph.add.node(2,'b',10, 'GroupB',new attribute('acategory', 'doc_'));
+graph.add.node(3,'c',10, 'GroupB',new attribute('acategory', 'doc_'));
+graph.add.node(7,'x',10, 'groupc',new attribute('acategory', 'dstruct_'));
 graph.add.edgebyId(100, 1, 2, 'asd');
-graph.add.edgebyId(101, 2, 3,'LABEL');
+graph.add.edgebyId(101, 3, 7,'LABEL');
+graph.add.edge(103, 'a', 'x', 'Labelx');
 
 //Function for position and colour based on attributes
 var g = graph.export.obj();
+/* g.nodes[0].x = 10;
+g.nodes[0].colour = new colour(0,3,10);
+g.nodes[1].colour = new colour(0,3,10);
+g.nodes[2].colour = new colour(0,3,10);
+g.nodes[3].colour = new colour(0,3,10); */
 console.log(g.nodes);
+g = colourizer.colourize(g);
+console.log(g.nodes[0].getColour());
+//console.log(g.nodes[0].getColour());
 
-generator.generate(g);
+//generator.generate(g);

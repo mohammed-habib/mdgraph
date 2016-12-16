@@ -14,24 +14,32 @@
 					<attvalue for="acategory" value="valueA"></attvalue>
 				</attvalues>
 				<viz:size value="10"></viz:size>
-				<viz:position x="0" y="0"></viz:position>
-				<viz:color r="0" g="0" b="255"></viz:color>
+				<viz:position x="10" y="undefined"></viz:position>
+				<viz:color r="0" g="3" b="10"></viz:color>
 			</node>
 			<node id="2" label="b">
 				<attvalues>
 					<attvalue for="acategory" value="valueB"></attvalue>
 				</attvalues>
 				<viz:size value="10"></viz:size>
-				<viz:position x="25" y="25"></viz:position>
-				<viz:color r="255" g="0" b="0"></viz:color>
+				<viz:position x="undefined" y="undefined"></viz:position>
+				<viz:color r="0" g="3" b="10"></viz:color>
 			</node>
 			<node id="3" label="c">
 				<attvalues>
 					<attvalue for="acategory" value="valueC"></attvalue>
 				</attvalues>
 				<viz:size value="10"></viz:size>
-				<viz:position x="50" y="50"></viz:position>
-				<viz:color r="0" g="255" b="0"></viz:color>
+				<viz:position x="undefined" y="undefined"></viz:position>
+				<viz:color r="0" g="3" b="10"></viz:color>
+			</node>
+			<node id="7" label="x">
+				<attvalues>
+					<attvalue for="acategory" value="valueD"></attvalue>
+				</attvalues>
+				<viz:size value="10"></viz:size>
+				<viz:position x="undefined" y="undefined"></viz:position>
+				<viz:color r="0" g="3" b="10"></viz:color>
 			</node>
 		</nodes>
 		<edges>
@@ -39,7 +47,11 @@
 				<attvalues>
 				</attvalues>
 			</edge>
-			<edge id="101" source="2" target="3" label="LABEL">
+			<edge id="101" source="3" target="7" label="LABEL">
+				<attvalues>
+				</attvalues>
+			</edge>
+			<edge id="103" source="1" target="7" label="Labelx">
 				<attvalues>
 				</attvalues>
 			</edge>
