@@ -58,9 +58,9 @@ g.nodes[0].colour = new colour(0,3,10);
 g.nodes[1].colour = new colour(0,3,10);
 g.nodes[2].colour = new colour(0,3,10);
 g.nodes[3].colour = new colour(0,3,10); */
-console.log(g.nodes);
+//console.log(g.nodes);
 g = colourizer.colourize(g);
-console.log(g.nodes[0].getColour());
+console.log(g.nodes);
 //console.log(g.nodes[0].getColour());
 
 //generator.generate(g);

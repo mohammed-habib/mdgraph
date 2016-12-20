@@ -1,6 +1,8 @@
 {
 	"colour": {
-		"groups": ["cmap_","doc_","dstruct_"]
+		"var": "val",
+		"var2": "val2",
+		"var3": "val3"
 	},
 	"metadata": {
 		"creator": "Michael Zhang",
