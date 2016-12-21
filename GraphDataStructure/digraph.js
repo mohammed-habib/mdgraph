@@ -51,7 +51,8 @@ function digraph () {
         return e;
         }
         else {
-        console.log('illegal input, one or more nodes do not exist');    
+			console.log('illegal input, one or more nodes do not exist');
+			console.log('sourcename: '+u+' ___targetname: '+v);
         }
     }
 	
@@ -74,6 +75,7 @@ function digraph () {
 		}
 		else {
 			console.log('illegal input, one or more nodes do not exist');
+			console.log('sourceid: '+u+' ___targetid: '+v);
 		}
 	}
 
