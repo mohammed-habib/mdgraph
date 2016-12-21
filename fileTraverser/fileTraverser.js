@@ -2,8 +2,6 @@ var fs = require('graceful-fs');
 var fileExists = require('file-exists');
 var readlineSync = require('readline-sync');
 var DOMParser = require('xmldom').DOMParser;
-var os = require("os");
-var mkdirp = require('mkdirp');
 var path = require('path');
 //asking for the directory and the file name of the .xml file to parse
 //
