@@ -6,7 +6,6 @@
 // allContent[i] = { nameSpace: *name-space i.e. Cwa_ecm", fileName = 'i.e. cmap_itemfinder', xmlContent = *whole xml Content of this metadata file }
 
 
-
 var fs = require('graceful-fs');
 var fileExists = require('file-exists');
 var readlineSync = require('readline-sync');
@@ -27,40 +26,40 @@ if(fs.lstatSync(dir).isDirectory()){ //typed in directory exists
 // readFolder(dir) reads all the xml files that currently exists inside the folder and creates 
 //an approprieate data structure to store all the xml object 
 function readAll(dir){
-  readFolder(dir);
-  //checker(allContent);
-  setTimeout(function(){
-    //console.log(allContent.length);
-     var filePath = path.join(dir, 'content.json');
-      var allData = JSON.stringify(allContent, null, 4);
-      //allData = allData.replace(/\r\n/g, " ");
-      fs.writeFileSync(filePath, allData);
-      var len = allContent.length;
-      console.log('the length of the allContent  array: '+ len);
-      console.log('done!');
+    readFolder(dir);
     //checker(allContent);
-  }, 500);
+    setTimeout(function(){
+        //console.log(allContent.length);
+        var filePath = path.join(dir, 'content.json');
+        var allData = JSON.stringify(allContent, null, 4);
+        //allData = allData.replace(/\r\n/g, " ");
+        fs.writeFileSync(filePath, allData);
+        var len = allContent.length;
+        console.log('the length of the allContent  array: '+ len);
+        console.log('done!');
+        //checker(allContent);
+    }, 500);
 }
 
-exports.readAll = readAll;
+//exports.readAll = readAll;
 
 function readFolder(dir){
- //readOneFile(dir+'/'+file);
-   fs.readdir(dir, (err, files) => {
-     files.forEach(file => {
-       var pathMerge = path.join(dir, file);
-       if(path.extname(pathMerge) === '.xml'){  
-           readOneFile(pathMerge);
-           //console.log(file);
-       }
+    //readOneFile(dir+'/'+file);
+    fs.readdir(dir, (err, files) => {
+        files.forEach(file => {
+            var pathMerge = path.join(dir, file);
+            if(path.extname(pathMerge) === '.xml'){  
+                readOneFile(pathMerge);
+                //console.log(file);
+            }
 
-       else {
+            else {
 
-           if(fs.lstatSync(pathMerge).isDirectory()) {
-               readFolder(pathMerge); 
-           }
-       } 
-     }); 
+                if(fs.lstatSync(pathMerge).isDirectory()) {
+                    readFolder(pathMerge); 
+                }
+            } 
+        }); 
 
     });
 } 
@@ -105,9 +104,7 @@ function checker(allContent){
     var methods = data.getElementsByTagName('method'); 
     var scrDataVal = data.getElementsByTagName('script');
 
-      
-      console.log(methods.length);
-      console.log(scrDataVal.length);
+    console.log(methods.length);
+    console.log(scrDataVal.length);
 }
-
 
