@@ -1,3 +1,12 @@
+//creates the file 'Content.json' inside the directory entered by the user
+//content.json has an array of all the metaData files
+
+// i.e. var allContent = fs.readFileSync(*path to content.json file*, 'utf8');
+// console.log(allContent.length) => gives the number of metadata files 
+// allContent[i] = { nameSpace: *name-space i.e. Cwa_ecm", fileName = 'i.e. cmap_itemfinder', xmlContent = *whole xml Content of this metadata file }
+
+
+
 var fs = require('graceful-fs');
 var fileExists = require('file-exists');
 var readlineSync = require('readline-sync');
