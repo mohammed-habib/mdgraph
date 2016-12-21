@@ -5,7 +5,6 @@ var DOMParser = require('xmldom').DOMParser;
 var os = require("os");
 var mkdirp = require('mkdirp');
 var path = require('path');
-
 //asking for the directory and the file name of the .xml file to parse
 //
 var dir = readlineSync.question('Enter the Path to the file directory: ');
@@ -25,9 +24,15 @@ function readAll(dir){
   //checker(allContent);
   setTimeout(function(){
     //console.log(allContent.length);
-    checker(allContent);
-    //return 3;
-  }, 1500);
+     var filePath = path.join(dir, 'content.json');
+      var allData = JSON.stringify(allContent, null, 4);
+      //allData = allData.replace(/\r\n/g, " ");
+      fs.writeFileSync(filePath, allData);
+      var len = allContent.length;
+      console.log('the length of the allContent  array: '+ len);
+      console.log('done!');
+    //checker(allContent);
+  }, 500);
 }
 
 exports.readAll = readAll;
@@ -83,13 +88,19 @@ function readOneFile(fileLocation){
 function checker(allContent){
       //console.log(JSON.stringify(allContent));
       //console.log(allContent[1].xmlContent);
-    content
-      var filePath = path.join(dir, 'content.json');
-      var allData = JSON.stringify(allContent, null, 4);
-      fs.writeFileSync(filePath, allData); // writes a file 'content.json' inside the directory given above by the user
-      console.log('done!');
-      var len = allContent.length;
-}
+      //console.log(allContent.length);  // number of namespaces
+    console.log(allContent[0].nameSpace); // name of the nameSpace
+    console.log(allContent[0].fileName); // metadata files of cwa_ecm
+    var doc = allContent[0].xmlContent;
+    console.log(doc); // prints out xmlContent
+     
+    var data = new DOMParser().parseFromString(doc, 'text/xml');
+    var methods = data.getElementsByTagName('method'); 
+    var scrDataVal = data.getElementsByTagName('script');
 
+      
+      console.log(methods.length);
+      console.log(scrDataVal.length);
+}
 
 
