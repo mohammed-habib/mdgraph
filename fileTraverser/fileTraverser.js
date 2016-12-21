@@ -5,7 +5,7 @@ var DOMParser = require('xmldom').DOMParser;
 var os = require("os");
 var mkdirp = require('mkdirp');
 var path = require('path');
-var parseString = require('xml2js').parseString;
+
 //asking for the directory and the file name of the .xml file to parse
 //
 var dir = readlineSync.question('Enter the Path to the file directory: ');
