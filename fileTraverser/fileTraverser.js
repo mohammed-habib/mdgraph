@@ -5,7 +5,7 @@ var DOMParser = require('xmldom').DOMParser;
 var os = require("os");
 var mkdirp = require('mkdirp');
 var path = require('path');
-
+var parseString = require('xml2js').parseString;
 //asking for the directory and the file name of the .xml file to parse
 //
 var dir = readlineSync.question('Enter the Path to the file directory: ');
@@ -22,11 +22,12 @@ if(fs.lstatSync(dir).isDirectory()){ //typed in directory exists
 //an approprieate data structure to store all the xml object 
 function readAll(dir){
   readFolder(dir);
+  //checker(allContent);
   setTimeout(function(){
     //console.log(allContent.length);
-    //checker(allContent);
-    return allContent;
-  }, 2000);
+    checker(allContent);
+    //return 3;
+  }, 1500);
 }
 
 exports.readAll = readAll;
@@ -48,6 +49,7 @@ function readFolder(dir){
            }
        } 
      }); 
+
     });
 } 
 
@@ -58,37 +60,36 @@ function readOneFile(fileLocation){
     var nameSpaceTitle = path.basename(dirName);
     //console.log(nameSpaceTitle)
     var metadataFileName = path.basename(fileLocation, '.xml'); //gives the name of the metadata file i.e. cmap_itemaction
-    var xmlDoc = fs.readFileSync(fileLocation, 'utf8');
-    var doc = new DOMParser().parseFromString(xmlDoc, 'text/xml'); 
+    var xmlDoc = fs.readFileSync(fileLocation, 'utf8'); 
+    var xmlData = xmlDoc.toString();
+    /*var xmlToJson = parseString(xmlData, function(err, result){
+        allContent.push({
+        nameSpace: nameSpaceTitle, 
+        fileName: metadataFileName,
+        xmlContent: result
+      });
 
+    })*/
+
+    xmlData = xmlData.replace(/\r\n/g, " ");
     allContent.push({
         nameSpace: nameSpaceTitle, 
         fileName: metadataFileName,
-        xmlContent: doc
+        xmlContent: xmlData
     });
-
 }
 
 
 function checker(allContent){
-     console.log(allContent.length);  // number of namespaces
-
-     console.log(allContent[351].nameSpace); // name of the nameSpace
-
-     console.log(allContent[0].fileName); // metadata files of cwa_ecm
-     
-     var data = allContent[0].xmlContent;
-     var xmlData = '';
-     xmlData += data;
-     
-     console.log(xmlData);
-
-      var methods = data.getElementsByTagName('method'); 
-      var scrDataVal = data.getElementsByTagName('script');
-
-      console.log(allContent[1].nameSpace); 
-      console.log(methods.length);
-      console.log(scrDataVal.length);
-    
+      //console.log(JSON.stringify(allContent));
+      //console.log(allContent[1].xmlContent);
+    content
+      var filePath = path.join(dir, 'content.json');
+      var allData = JSON.stringify(allContent, null, 4);
+      fs.writeFileSync(filePath, allData); // writes a file 'content.json' inside the directory given above by the user
+      console.log('done!');
+      var len = allContent.length;
 }
+
+
 
