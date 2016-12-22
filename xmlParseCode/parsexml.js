@@ -3,7 +3,6 @@ var fileExists = require('file-exists');
 var readlineSync = require('readline-sync');
 var DOMParser = require('xmldom').DOMParser;
 var os = require("os");
-var mkdirp = require('mkdirp');
 var itemMap = require('./itemMap.js');
 var path = require('path');
 
