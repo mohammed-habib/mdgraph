@@ -1,0 +1,20 @@
+{
+  "name": "xmlparse",
+  "version": "1.0.0",
+  "description": "Parses metadata into js and swql ifiles",
+  "main": "itemMap.js",
+  "dependencies": {
+    "file-exists": "^2.0.0",
+    "graceful-fs": "^4.1.11",
+    "mkdirp": "^0.5.1",
+    "os": "^0.1.1",
+    "readline-sync": "^1.4.5",
+    "xmldom": "^0.1.27"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ericsson co-ops",
+  "license": "ISC"
+}

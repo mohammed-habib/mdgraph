@@ -76,8 +76,10 @@ function startParsing(fileLocation, container){
     if(fileExists(fileLocation)){
         var xmldoc = fs.readFileSync(fileLocation, 'utf8');
         var doc = new DOMParser().parseFromString(xmldoc, 'text/xml');
-        console.log(doc);
-        var methods = doc.getElementsByTagName('method'); 
+        if(doc === undefined) {
+	   return;
+	}
+	var methods = doc.getElementsByTagName('method'); 
         var scrDataVal = doc.getElementsByTagName('script');
         var itemMapVal = doc.getElementsByTagName('itemMap');
         var scrLength = scrDataVal.length;
@@ -204,7 +206,11 @@ function makeFilesWithoutMethod(dir, scriptData){ //when there are no <method> t
           }
     });
    for(var i = 0; i < length; i++){
-        var dataScr = scriptData[i].firstChild.nodeValue;
+   	var checkXML = scriptData[i].firstChild 
+	if(checkXML === null) {
+	   continue;
+	}
+        var dataScr = checkXML.nodeValue;
         dataScr = dataScr.trim();
         if(dataScr.length != 0){
            var dataVal = 'function script() {' + os.EOL + '   ' +dataScr + os.EOL+ '}';
