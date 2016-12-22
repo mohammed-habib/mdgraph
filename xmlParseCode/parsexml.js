@@ -3,8 +3,9 @@ var fileExists = require('file-exists');
 var readlineSync = require('readline-sync');
 var DOMParser = require('xmldom').DOMParser;
 var os = require("os");
-var itemMap = require('./itemMap.js');
 var path = require('path');
+var itemMap = require('./itemMap.js');
+
 
 //asking for the directory and the file name of the .xml file to parse
 //
