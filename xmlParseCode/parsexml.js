@@ -111,7 +111,7 @@ function startParsing(fileLocation, container){
               }
               else{
                  makeFilesWithoutMethod(cntName, scrDataVal);
-               }
+              }
           }
         }   
       }
@@ -164,6 +164,7 @@ function makeFiles(dir, methods){
               var sqlData = methods[i].getElementsByTagName('script')[0].firstChild.nodeValue;
               var reqPath = path.join(sqlDir, name+'.sql');
                fs.writeFileSync(reqPath, sqlData, 'utf8');
+               console.log('sql file saved.');
           }
       
       }  
@@ -181,6 +182,7 @@ function makeFiles(dir, methods){
           if(paramList.length === 0){ //there are no parameters 
             var noParamJsData = 'function ' +name+ '(){ '+os.EOL +'   '+scriptVal +os.EOL+  '}';
             fs.writeFileSync(path.join(jsDir, name+'.js'), noParamJsData, 'utf8');
+            console.log('js file saved.');
           } 
           
           else { //there are parameters 
@@ -200,6 +202,7 @@ function makeFiles(dir, methods){
               
               jsData += '){'+os.EOL +'    ' +scriptVal +os.EOL+ '}';   
               fs.writeFileSync(jsDir+'/'+name+'.js', jsData, 'utf8');
+              console.log('js file saved.');
           }
       } 
   }
@@ -219,8 +222,9 @@ function makeFilesWithoutMethod(dir, scriptData){ //when there are no <method> t
         dataScr = dataScr.trim();
         
         if(dataScr.length != 0){
-           var dataVal = 'function script() {' + os.EOL + '   ' +dataScr + os.EOL+ '}';
-           fs.writeFileSync(scriptDir+'/script'+[i]+'.js', dataVal, 'utf8');
+            var dataVal = 'function script() {' + os.EOL + '   ' +dataScr + os.EOL+ '}';
+            fs.writeFileSync(scriptDir+'/script'+[i]+'.js', dataVal, 'utf8');
+            console.log('js file saved.');
          }
     
     }
