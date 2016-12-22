@@ -9,20 +9,14 @@ var itemMap = require('./itemMap.js');
 
 //asking for the directory and the file name of the .xml file to parse
 //
-var parseWhat = readlineSync.question('Parse only one file or the whole folder containing xml files? (file / folder): ');
 var dir = readlineSync.question('Enter the path to the file directory: ');
 
 
-
-if(parseWhat == 'file'){
-    var container = path.join(dir, 'allScriptFiles');
-    var file = readlineSync.question('Enter the File Name: ');
-    readOneFile(dir, file, container);
- }
-else if(parseWhat == 'folder'){ 
+if(fs.existsSync(dir)){ 
     var container = path.join(dir, 'allScriptFiles');
     readFolder(dir, container);
 }
+
 
 var fileName; //stores fileName. e.g. cmap_ItemAction
 
