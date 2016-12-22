@@ -16,8 +16,7 @@ parsexml.js parses all the metaData files that exists in the given directory and
 STEP 1: run the xml_install.sh script. 
    -This will install all the required npm packages and start the parsexml.js file.
 
-STEP 2: Input 'file' if only one single file has to be parsed
-      	Input 'folder' if the whole folder has to be parsed
+STEP 2: 
     -Type the path to the desired folder/file directory and click Enter to start parsing.
 
 STEP 3: On the completion of the program, a new folder with name: "allScriptFiles" could be found inside the directory whose path was typed in during the start of the program (metadata files directory). 
