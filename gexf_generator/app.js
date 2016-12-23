@@ -4,7 +4,7 @@ var visualizer = require('./visualizer.js');
 var digraph = require('../GraphDataStructure/digraph');
 var attribute = require('../GraphDataStructure/attribute');
 var colour = require('../GraphDataStructure/colour');
-var config = require('config');
+//var config = require('config');
 
 var graph = digraph();
 
@@ -44,7 +44,7 @@ var g = graph.export.obj();
 
 console.log("~~~~~~~~~~~~~~~~BEFORE VISUALS~~~~~~~~~~~~~~~~~~~");
 console.log(g.nodes);
-g = visualizer.visuals(g);
-console.log("~~~~~~~~~~~~~~~~AFTER VISUALS~~~~~~~~~~~~~~~~~~~");
-console.log(g.nodes);
-generator.generate(g);
+//g = visualizer.visuals(g);
+//console.log("~~~~~~~~~~~~~~~~AFTER VISUALS~~~~~~~~~~~~~~~~~~~");
+//console.log(g.nodes);
+//generator.generate(g);

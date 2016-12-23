@@ -1,4 +1,4 @@
-var config = require('config');
+//var config = require('config');
 var colour = require('../GraphDataStructure/colour');
 
 var black = new colour(0, 0, 0);

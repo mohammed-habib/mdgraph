@@ -1,0 +1,26 @@
+{
+  "name": "gexf_generator",
+  "version": "1.0.0",
+  "description": ".gexf file generator",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecmskunkworks/mdgraph.git"
+  },
+  "keywords": [
+    "gexfgen"
+  ],
+  "author": "michael zhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ecmskunkworks/mdgraph/issues"
+  },
+  "homepage": "https://github.com/ecmskunkworks/mdgraph#readme",
+  "dependencies": {
+    "config": "^1.24.0",
+    "fs": "0.0.1-security"
+  }
+}
