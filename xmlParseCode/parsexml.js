@@ -45,16 +45,7 @@ function readFolder(dir, container){
               else if(path.extname(file) === '.xml') { // checks for xml files 
                   return readOneFile(dir, file, container);
               }
-
-              else{ //to handle metadata files which does not have '.xml' extension name
-                  var content = fs.readFileSync(path.join(dir, file));
-                  if(content.indexOf('xml') > -1){
-                      return readOneFile(dir, file, container);
-                  }
-              }
           } 
-
-
       });
    }) 
 }
