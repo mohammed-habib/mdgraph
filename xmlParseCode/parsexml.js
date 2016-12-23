@@ -6,17 +6,17 @@ var os = require("os");
 var path = require('path');
 var itemMap = require('./itemMap.js');
 
-
 //asking for the directory and the file name of the .xml file to parse
 //
+//var parseWhat = readlineSync.question('Parse only one file or the whole folder containing xml files? (file / folder): ');
 var dir = readlineSync.question('Enter the path to the file directory: ');
 
 
-if(fs.existsSync(dir)){ 
-    var container = path.join(dir, 'allScriptFiles');
-    readFolder(dir, container);
-}
 
+if(fs.existsSync(dir)){
+  var container = path.join(dir, 'allScriptFiles');
+  readFolder(dir, container);
+}
 
 var fileName; //stores fileName. e.g. cmap_ItemAction
 
@@ -28,47 +28,46 @@ function readFolder(dir, container){
     if(!(fs.existsSync(container))){
         fs.mkdirSync(container);
     }
+    else if(fs.existsSync(container)){
+        console.log('Error: '+container+' already exists. ');
+        return;
+    }
 
     fs.readdir(dir, (err, files) => {
   
       files.forEach(function(file) {
-          var fileLen = file.length; 
-          var suffix = file.substr(fileLen-4, fileLen-1); 
-          if(suffix == '.xml'){ // checks for xml files 
-            return readOneFile(dir, file, container);
-          }
-          else if((fs.lstatSync(path.join(dir, file)).isDirectory()) && (file != 'allScriptFiles')) {
-             return readFolder(path.join(dir, file) , path.join(container, file)); 
+          if(file != 'allScriptFiles') {
+              
+              if(fs.lstatSync(path.join(dir, file)).isDirectory()){
+                  return readFolder(path.join(dir, file) , path.join(container, file)); 
+              }
+              
+              else if(path.extname(file) === '.xml') { // checks for xml files 
+                  return readOneFile(dir, file, container);
+              }
+
+              else{ //to handle metadata files which does not have '.xml' extension name
+                  var content = fs.readFileSync(path.join(dir, file));
+                  if(content.indexOf('xml') > -1){
+                      return readOneFile(dir, file, container);
+                  }
+              }
           } 
+
+
       });
    }) 
 }
 
 
 function readOneFile(dir, file, container){    
-   //fileLocation is the exact location of the xml file
-   var fileLocation = getFileLocation(dir, file);
-   startParsing(fileLocation, container);
+    
+    fileName = file;
+    var fileLocation = path.join(dir, file);
+    startParsing(fileLocation, container);
 
 }
 
-//getFileLocation returns the exact fileLocation. C://../../cmap_Iac.xml
-function getFileLocation(dir, file){
-    
-    var fileLen = file.length;
-    //xmlCheck is used to check if the last 4 characters of the file input are '.xml' or not
-    var xmlCheck = file.substr(fileLen-4, fileLen-1);
-    
-    if(xmlCheck === '.xml'){   //if the user typed in the file name with .xml already attached at the back
-      fileName = file.substring(0, fileLen-4);
-      return path.join(dir, file);
-    }
-    
-    else {
-      fileName=file;
-      return path.join(dir, file+'.xml');
-    } 
-}
 
 // startParsing reads the metaData file and calls makeFiles if there exists a method tag
 // or makeFilesWithoutMethod is there are no methos tags but only script tags
@@ -77,20 +76,23 @@ function startParsing(fileLocation, container){
     if(fileExists(fileLocation)){   
     
         var doc = new DOMParser().parseFromString(fs.readFileSync(fileLocation, 'utf8'), 'text/xml');
+        if(doc === undefined){
+            return;
+        }
         var methods = doc.getElementsByTagName('method'); 
         var scrDataVal = doc.getElementsByTagName('script');
         var itemMapVal = doc.getElementsByTagName('itemMap');
         var scrLength = scrDataVal.length;
         
         if(scrLength != 0){
-          var cntName = container+'/File-'+fileName;
+          var cntName = container+'/MD-'+fileName;
           
           if(!(fs.existsSync(cntName))){
             fs.mkdirSync(cntName);
           }
           
-          var scrName = scrDataVal[0].getAttribute('name');
-          scrName = scrName.trim(); //removes empty spaces from scrName 
+          var scrName = scrDataVal[0].getAttribute('name'); //for script_files 
+          //scrName = scrName.trim(); //removes empty spaces from scrName 
           
           if(itemMapVal.length !== 0){ // there are itemMap tags 
                 itemMap.readItemMap(cntName, itemMapVal, fileName, scrDataVal);
@@ -101,7 +103,7 @@ function startParsing(fileLocation, container){
           }
           else { // no method tags but script tags
               
-              if(scrName.length != 0){ //if name exists, there can be a script tag within this script tag. i.e. metadata files with prefix 'script_'
+              if(scrName !== undefined){ //if name exists, there can be a script tag within this script tag. i.e. metadata files with prefix 'script_'
                  makeFiles(cntName, scrDataVal);
               }
               else{
@@ -113,6 +115,7 @@ function startParsing(fileLocation, container){
      
      else { //file location doesn't exist
        console.log('File not found at '+fileLocation);
+        return;
     }
 
 }
@@ -212,8 +215,11 @@ function makeFilesWithoutMethod(dir, scriptData){ //when there are no <method> t
     }  
    
     for(var i = 0; i < length; i++){
-    
-        var dataScr = scriptData[i].firstChild.nodeValue;
+        var checkXML = scriptData[i].firstChild
+        if(checkXML === null) {
+            continue;
+        }
+        var dataScr = checkXML.nodeValue;
         dataScr = dataScr.trim();
         
         if(dataScr.length != 0){
