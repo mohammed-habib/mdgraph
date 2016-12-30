@@ -1,0 +1,3 @@
+To run filters.html
+Changes might need to be made to the plugin script src paths
+Change line 261 to point to the .gexf file that needs to be visualized
