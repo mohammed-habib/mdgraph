@@ -1,10 +1,4 @@
-/*
-*
-*                     XML Parser
-*
-*/
--------------------------------------------------------------------
--------------------------------------------------------------------
+# XML Metadata Parser
 
 1. what is Xml parser:
 
@@ -23,3 +17,10 @@ STEP 3: On the completion of the program, a new folder with name: "allScriptFile
     - allScriptFiles contains folders with the name of their corresponding metaData files containing well-formatted JavaScript/Sql script files.
 
 -----------------------------------------------------------------
+
+-> Stucture of allScriptFiles Folder: 
+  The stucture will be the same as that of the metadata directory given but in place of a metadata file (.xml) file, a folder will be created consisting of either one or both of 'js-files' folder & 'sql-files' fodler which has .js files and .sql files respectively. 
+  
+  A folder is only created when it finds atleast one <script></script> tag inside a metadata file to avoid the empty subfolders. 
+  
+  
