@@ -6,9 +6,9 @@ var attribute = require('../GraphDataStructure/attribute');
 var colour = require('../GraphDataStructure/colour');
 //var config = require('config');
 
-var graph = digraph();
+/* var graph = digraph(); */
 
-var arr;
+/* var arr;
 var name;
 var group1 = 'cmap';
 var group2 = 'doc';
@@ -38,13 +38,18 @@ fs.readFileSync('./edges.txt').toString().split('\n').forEach(
 			graph.add.edgebyId(arr[2], arr[0], arr[1], arr[3]);
 		}
 	}
-);
+); */
 
+// Get graph object from somewhere
 var g = graph.export.obj();
 
 console.log("~~~~~~~~~~~~~~~~BEFORE VISUALS~~~~~~~~~~~~~~~~~~~");
 console.log(g.nodes);
+
+// Run the visualizer to categorize nodes into colour and position groups
 //g = visualizer.visuals(g);
 //console.log("~~~~~~~~~~~~~~~~AFTER VISUALS~~~~~~~~~~~~~~~~~~~");
 //console.log(g.nodes);
+
+// Run the generator to generate .gexf file
 //generator.generate(g);
